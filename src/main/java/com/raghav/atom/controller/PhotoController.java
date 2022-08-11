@@ -1,27 +1,36 @@
 package com.raghav.atom.controller;
 
 import com.raghav.atom.model.Photo;
+import com.raghav.atom.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.raghav.atom.repo.PhotoRepo;
 
 @RestController
 @RequestMapping("/photo")
 public class PhotoController {
     @Autowired
-    private PhotoRepo photoRepo;
+    private PhotoService photoService;
 
     @GetMapping
-    public ResponseEntity<?> getAllPhotos(){
-        System.out.println("In get method");
-        return ResponseEntity.ok(photoRepo.findAll());
+    public ResponseEntity getAllPhotos(){
+        return photoService.getAllPhotos();
     }
 
-    @PostMapping
-    public ResponseEntity<?> addPhoto(@RequestBody Photo photo ){
+    @PostMapping(headers = "Accept=application/json")
+    public ResponseEntity addPhoto(@RequestBody Photo photo){
         System.out.println(photo);
-        return ResponseEntity.ok("200");
+        return ResponseEntity.ok(photoService.addNewDocument(photo));
     }
 
+    @PutMapping(headers = "Accept=application/json")
+    public ResponseEntity updatePhoto(@RequestBody Photo photo){
+        System.out.println(photo);
+        return photoService.updateDocument(photo);
+    }
+
+    @DeleteMapping(headers = "Accept=application/json")
+    public ResponseEntity deletePhoto(@RequestBody Photo photo){
+        return photoService.deletePhoto(photo);
+    }
 }

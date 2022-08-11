@@ -1,31 +1,40 @@
 package com.raghav.atom.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @Document(collection = "Photo")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Photo {
 
     @Id
-    @Getter
-    private String id;
-    @Getter
-    @Setter
-    private Date date;
-    @Getter
-    @Setter
+    @JsonSerialize(using= ToStringSerializer.class)
+    private ObjectId id;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime date;
+
     private String thumbNailUrl;
-    @Getter
-    @Setter
+
     private String originalFileUrl;
 
-    public Photo(Date date, String thumbNailUrl, String originalFileUrl) {
+    public Photo(ObjectId id, LocalDateTime date, String thumbNailUrl, String originalFileUrl) {
+        this.id = id;
         this.date = date;
         this.thumbNailUrl = thumbNailUrl;
         this.originalFileUrl = originalFileUrl;
