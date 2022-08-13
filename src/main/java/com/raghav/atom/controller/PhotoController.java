@@ -12,9 +12,17 @@ public class PhotoController {
     @Autowired
     private PhotoService photoService;
 
+
+
     @GetMapping
     public ResponseEntity getAllPhotos(){
         return photoService.getAllPhotos();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity getPhotoById(@PathVariable("id") String id){
+
+        return photoService.getPhotoById(id);
     }
 
     @PostMapping(headers = "Accept=application/json")
@@ -29,8 +37,14 @@ public class PhotoController {
         return photoService.updateDocument(photo);
     }
 
-    @DeleteMapping(headers = "Accept=application/json")
-    public ResponseEntity deletePhoto(@RequestBody Photo photo){
-        return photoService.deletePhoto(photo);
+    @RequestMapping(value = "/{id}",method=RequestMethod.DELETE)
+    @ResponseBody
+    public ResponseEntity deletePhoto(@PathVariable("id") String photoId){
+        System.out.println(photoId);
+        return photoService.deletePhoto(photoId);
+    }
+
+    public PhotoController(PhotoService photoService) {
+        this.photoService = photoService;
     }
 }

@@ -1,6 +1,5 @@
 package com.raghav.atom.service;
 
-import com.raghav.atom.controller.PhotoAddRequest;
 import com.raghav.atom.model.Photo;
 import com.raghav.atom.repo.PhotoRepo;
 import lombok.AllArgsConstructor;
@@ -41,13 +40,26 @@ public class PhotoService {
 
     }
 
-    public ResponseEntity deletePhoto(Photo photo) {
-        Optional<Photo> old = photoRepo.findById(photo.getId().toString());
+    public ResponseEntity deletePhoto(String photoId) {
+        Optional<Photo> old = photoRepo.findById(photoId);
         if(old.isPresent()){
-            photoRepo.delete(photo);
-            return ResponseEntity.ok(ResponseEntity.ok());
-        }else {
-            return ResponseEntity.notFound().build();
+            photoRepo.deleteById(photoId);
         }
+        if(photoRepo.findById(photoId).isEmpty())
+            return ResponseEntity.ok().build();
+        else
+            return ResponseEntity.notFound().build();
+    }
+
+    public List<Photo> addNewDocuments(List<Photo> photos) {
+        return photoRepo.saveAll(photos);
+    }
+
+    public ResponseEntity getPhotoById(String id) {
+        Optional<Photo> photo = photoRepo.findById(id);
+        if(photo.isEmpty())
+            return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(photo.get());
+
     }
 }
