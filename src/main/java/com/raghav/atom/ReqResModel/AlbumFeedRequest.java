@@ -1,4 +1,4 @@
-package com.raghav.atom.controller;
+package com.raghav.atom.ReqResModel;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;

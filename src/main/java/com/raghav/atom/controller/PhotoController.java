@@ -16,32 +16,35 @@ public class PhotoController {
 
     @GetMapping
     public ResponseEntity getAllPhotos(){
-        return photoService.getAllPhotos();
+        return ResponseEntity.ok()
+                .body(photoService.getAllPhotos());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity getPhotoById(@PathVariable("id") String id){
-
-        return photoService.getPhotoById(id);
+        return ResponseEntity.ok()
+                .body(photoService.getPhotoById(id));
     }
 
     @PostMapping(headers = "Accept=application/json")
     public ResponseEntity addPhoto(@RequestBody Photo photo){
-        System.out.println(photo);
-        return ResponseEntity.ok(photoService.addNewDocument(photo));
+        return ResponseEntity.ok()
+                .body(photoService.addNewDocument(photo));
     }
 
     @PutMapping(headers = "Accept=application/json")
     public ResponseEntity updatePhoto(@RequestBody Photo photo){
-        System.out.println(photo);
-        return photoService.updateDocument(photo);
+        return ResponseEntity.ok()
+        .body(photoService.updateDocument(photo));
     }
 
     @RequestMapping(value = "/{id}",method=RequestMethod.DELETE)
     @ResponseBody
     public ResponseEntity deletePhoto(@PathVariable("id") String photoId){
-        System.out.println(photoId);
-        return photoService.deletePhoto(photoId);
+        if(photoService.deletePhoto(photoId))
+            return ResponseEntity.ok().build();
+
+        return ResponseEntity.notFound().build();
     }
 
     public PhotoController(PhotoService photoService) {

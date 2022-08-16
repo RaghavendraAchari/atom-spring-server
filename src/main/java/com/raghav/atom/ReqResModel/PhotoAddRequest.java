@@ -1,10 +1,8 @@
-package com.raghav.atom.controller;
+package com.raghav.atom.ReqResModel;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.raghav.atom.model.Photo;
 import lombok.Data;
 import org.bson.types.ObjectId;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

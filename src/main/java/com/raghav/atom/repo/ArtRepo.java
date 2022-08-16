@@ -1,9 +1,10 @@
 package com.raghav.atom.repo;
 
-import com.raghav.atom.model.AlbumFeed;
+import com.raghav.atom.model.Art;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Service;
 
-public interface AlbumFeedRepo extends MongoRepository<AlbumFeed, ObjectId> {
+
+public interface ArtRepo extends MongoRepository<Art, ObjectId> {
 }
