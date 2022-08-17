@@ -1,8 +1,11 @@
 package com.raghav.atom.service;
 
 import com.raghav.atom.ReqResModel.AlbumFeedRequest;
+import com.raghav.atom.exception.ResourceNotFoundException;
+import com.raghav.atom.exception.ServiceException;
 import com.raghav.atom.model.AlbumFeed;
 import com.raghav.atom.model.Photo;
+import com.raghav.atom.model.ResourceType;
 import com.raghav.atom.repo.AlbumFeedRepo;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -30,47 +33,80 @@ public class AlbumFeedService {
     @Autowired
     private PhotoService photoService;
 
-    public List<AlbumFeed> getAllFeed() {
-        List<AlbumFeed> list = albumFeedRepo.findAll();
-        return list;
-    }
-
-    public AlbumFeed addAlbum(AlbumFeedRequest feed) {
-        List<Photo> addedPhotos = photoService.addNewDocuments(feed.getPhotos());
-        AlbumFeed albumFeed = AlbumFeedRequest.fromAlbumFeedRequest(feed, addedPhotos);
-
-        log.info(ADD_TAG, albumFeed);
-
-        return albumFeedRepo.save(albumFeed);
-    }
-
-    public AlbumFeed updateDocument(AlbumFeed feed) {
-        Optional<AlbumFeed> old = albumFeedRepo.findById(feed.getId());
-        if(old.isPresent()){
-            log.info(UPDATE_TAG, old.get());
-            return albumFeedRepo.save(feed);
-
-        }else {
-            return null;
+    public List<AlbumFeed> getAllFeed() throws ServiceException {
+        try{
+            List<AlbumFeed> list = albumFeedRepo.findAll();
+            return list;
+        }catch (Exception e){
+            throw new ServiceException(ResourceType.ALBUM_FEED);
         }
+
     }
 
-    public boolean deleteAlbum(String albumId) {
-        Optional<AlbumFeed> old = albumFeedRepo.findById(new ObjectId(albumId));
-        old.ifPresent(albumFeed -> albumFeedRepo.deleteById(albumFeed.getId()));
-        log.info(DELETE_TAG, old.get());
+    public AlbumFeed addAlbum(AlbumFeedRequest feed) throws ServiceException {
+        try{
+            List<Photo> addedPhotos = photoService.addNewDocuments(feed.getPhotos());
+            AlbumFeed albumFeed = AlbumFeedRequest.fromAlbumFeedRequest(feed, addedPhotos);
 
-        if(albumFeedRepo.findById(old.get().getId()).isEmpty())
-            return true;
-        else {
-            return false;
+            log.info(ADD_TAG, albumFeed);
+
+            return albumFeedRepo.save(albumFeed);
+        }catch (ServiceException e){
+            throw e;
+        }catch (Exception e){
+            throw new ServiceException(ResourceType.ALBUM_FEED);
         }
+
     }
 
-    public AlbumFeed getAlbumFeedById(String id) {
-        Optional<AlbumFeed> album = albumFeedRepo.findById(new ObjectId(id));
-        if(album.isPresent())
-            return album.get();
-        return null;
+    public AlbumFeed updateDocument(AlbumFeed feed) throws ResourceNotFoundException, ServiceException {
+        try{
+            Optional<AlbumFeed> old = albumFeedRepo.findById(feed.getId());
+            if(old.isPresent()){
+                log.info(UPDATE_TAG, old.get());
+                return albumFeedRepo.save(feed);
+
+            }else {
+                throw new ResourceNotFoundException(ResourceType.ALBUM_FEED);
+            }
+        }catch (ResourceNotFoundException e){
+            throw e;
+        }catch (Exception e){
+            throw new ServiceException(ResourceType.ALBUM_FEED);
+        }
+
+    }
+
+    public boolean deleteAlbum(String albumId) throws ResourceNotFoundException, ServiceException {
+        try{
+            Optional<AlbumFeed> old = albumFeedRepo.findById(new ObjectId(albumId));
+            old.ifPresent(albumFeed -> albumFeedRepo.deleteById(albumFeed.getId()));
+            log.info(DELETE_TAG, old.get());
+
+            if(albumFeedRepo.findById(old.get().getId()).isEmpty())
+                return true;
+            else {
+                throw new ResourceNotFoundException(ResourceType.ALBUM_FEED);
+            }
+        }catch (ResourceNotFoundException e){
+            throw e;
+        }catch (Exception e){
+            throw new ServiceException(ResourceType.ALBUM_FEED);
+        }
+
+    }
+
+    public AlbumFeed getAlbumFeedById(String id) throws ServiceException, ResourceNotFoundException {
+        try{
+            Optional<AlbumFeed> album = albumFeedRepo.findById(new ObjectId(id));
+            if(album.isPresent())
+                return album.get();
+            throw new ResourceNotFoundException(ResourceType.ALBUM_FEED);
+        } catch (ResourceNotFoundException e) {
+            throw e;
+        }catch (Exception e){
+            throw new ServiceException(ResourceType.ALBUM_FEED);
+        }
+
     }
 }

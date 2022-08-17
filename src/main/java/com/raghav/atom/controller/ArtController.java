@@ -1,7 +1,8 @@
 package com.raghav.atom.controller;
 
+import com.raghav.atom.exception.ResourceNotFoundException;
+import com.raghav.atom.exception.ServiceException;
 import com.raghav.atom.model.Art;
-import com.raghav.atom.repo.ArtRepo;
 import com.raghav.atom.service.ArtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,32 +15,32 @@ public class ArtController {
     private ArtService artService;
 
     @GetMapping
-    public ResponseEntity getAllArt(){
+    public ResponseEntity getAllArt() throws ServiceException {
         return ResponseEntity.ok()
                 .body(artService.getAllArt());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getArtById(@PathVariable("id") String id){
+    public ResponseEntity getArtById(@PathVariable("id") String id) throws ResourceNotFoundException, ServiceException {
         return ResponseEntity.ok()
                 .body(artService.getArtById(id));
     }
 
     @PostMapping(headers = "Accept=application/json")
-    public ResponseEntity addArt(@RequestBody Art art){
+    public ResponseEntity addArt(@RequestBody Art art) throws ServiceException {
         return ResponseEntity.ok()
                 .body(artService.addArt(art));
     }
 
     @PutMapping(headers = "Accept=application/json")
-    public ResponseEntity updateArt(@RequestBody Art art){
+    public ResponseEntity updateArt(@RequestBody Art art) throws ResourceNotFoundException, ServiceException {
         return ResponseEntity.ok()
                 .body(artService.updateArt(art));
     }
 
     @DeleteMapping( value = "/{id}",headers = "Accept=application/json")
     @ResponseBody
-    public ResponseEntity deleteArt(@PathVariable("id") String artId){
+    public ResponseEntity deleteArt(@PathVariable("id") String artId) throws ServiceException {
         return ResponseEntity.ok()
                 .body(artService.deleteArt(artId));
     }
