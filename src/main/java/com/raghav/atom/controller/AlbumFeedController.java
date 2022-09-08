@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController()
-@RequestMapping("/albumfeed")
+@RequestMapping("/api/albumfeed")
 public class AlbumFeedController {
     @Autowired
     private AlbumFeedService albumFeedService;

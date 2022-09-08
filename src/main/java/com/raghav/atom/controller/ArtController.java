@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/art")
+@RequestMapping("/api/art")
 public class ArtController {
     @Autowired
     private ArtService artService;

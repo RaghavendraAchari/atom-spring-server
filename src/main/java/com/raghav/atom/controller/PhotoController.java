@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/photo")
+@RequestMapping("/api/photo")
 public class PhotoController {
     @Autowired
     private PhotoService photoService;
