@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.raghav.atom.model.AlbumFeed;
 import com.raghav.atom.model.Photo;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
@@ -14,12 +15,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 public class AlbumFeedRequest {
     @JsonSerialize(using= ToStringSerializer.class)
     private ObjectId id;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @JsonSerialize(using= ToStringSerializer.class)
     private LocalDateTime date;
 
     private String title;
@@ -30,15 +33,6 @@ public class AlbumFeedRequest {
 
     private String details;
 
-    public AlbumFeedRequest(ObjectId id, LocalDateTime date, String title, String description, List<Photo> photos, String details) {
-        this.id = id;
-        this.date = date;
-        this.title = title;
-        this.description = description;
-        this.photos = photos;
-        this.details = details;
-    }
-
     public static AlbumFeed fromAlbumFeedRequest(AlbumFeedRequest request, List<Photo> newPhotos){
         AlbumFeed newOj = new AlbumFeed();
         newOj.setDate(request.date);
@@ -47,9 +41,9 @@ public class AlbumFeedRequest {
         newOj.setTitle(request.title);
 
         List<String> newPhotoIds = new ArrayList<>();
-        newPhotos.forEach((item) -> {
-            newPhotoIds.add(item.getId().toString());
-        });
+        newPhotos.forEach((item) ->
+            newPhotoIds.add(item.getId().toString()) );
+
 
         newOj.setPhotos(newPhotoIds);
 

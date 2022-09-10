@@ -25,6 +25,7 @@ public class AlbumFeed {
     private ObjectId id;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @JsonSerialize(using= ToStringSerializer.class)
     private LocalDateTime date;
 
     private String title;

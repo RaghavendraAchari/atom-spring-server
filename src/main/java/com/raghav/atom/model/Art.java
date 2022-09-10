@@ -23,6 +23,7 @@ public class Art {
     private String description;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @JsonSerialize(using= ToStringSerializer.class)
     private LocalDateTime date;
 
     private String thumbnailLink;

@@ -6,6 +6,7 @@ import com.raghav.atom.repo.PhotoRepo;
 import com.raghav.atom.service.PhotoService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 
 import static org.mockito.Mockito.verify;
@@ -20,18 +22,20 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 class PhotoControllerTest {
 
-    private PhotoController photoController;
-
-    private PhotoService photoService;
-
     @Mock
     private PhotoRepo photoRepo;
 
-    @BeforeAll
-    void setUp(){
-        photoService = new PhotoService(photoRepo);
-        photoController = new PhotoController(photoService);
-    }
+    @InjectMocks
+    private PhotoService photoService = new PhotoService();
+
+    private PhotoController photoController = new PhotoController(photoService);
+
+
+//    @BeforeAll
+//    void setUp(){
+//        photoService = new PhotoService(photoRepo);
+//        photoController = new PhotoController(photoService);
+//    }
 
     @Test
     void getAllPhotosOnSuccess() throws PhotoServiceException, ResourceNotFoundException {
