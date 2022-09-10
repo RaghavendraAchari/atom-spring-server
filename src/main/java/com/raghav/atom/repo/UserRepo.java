@@ -7,10 +7,12 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface UserRepo extends MongoRepository<User, ObjectId> {
-    @Query("{'userName': ?0}")
-    Optional<User> findByUserName(String userName);
+    Optional<User> findByUsername(String username);
 }
