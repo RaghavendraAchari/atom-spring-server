@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/static/css/main.d8aa227d.css",
-    "main.js": "/static/js/main.904cf67d.js",
+    "main.css": "/static/css/main.68ebdc61.css",
+    "main.js": "/static/js/main.86e27397.js",
     "static/js/787.d9a3d8dc.chunk.js": "/static/js/787.d9a3d8dc.chunk.js",
     "static/media/PhotoBanner.jpg": "/static/media/PhotoBanner.32d4dba6cbe016fcd5e1.jpg",
     "static/media/VecteezyVirtualTourism-VR-Illustration-2FA0821_generated.jpg": "/static/media/VecteezyVirtualTourism-VR-Illustration-2FA0821_generated.8c15bee3f7ac4bbb74b5.jpg",
     "index.html": "/index.html",
-    "main.d8aa227d.css.map": "/static/css/main.d8aa227d.css.map",
-    "main.904cf67d.js.map": "/static/js/main.904cf67d.js.map",
+    "main.68ebdc61.css.map": "/static/css/main.68ebdc61.css.map",
+    "main.86e27397.js.map": "/static/js/main.86e27397.js.map",
     "787.d9a3d8dc.chunk.js.map": "/static/js/787.d9a3d8dc.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.d8aa227d.css",
-    "static/js/main.904cf67d.js"
+    "static/css/main.68ebdc61.css",
+    "static/js/main.86e27397.js"
   ]
 }
