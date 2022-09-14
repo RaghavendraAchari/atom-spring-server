@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class SinglePageAppController {
-    @RequestMapping(value = {"/","/photography/**","/art/**"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/","/photography/**","/art/**", "/admin/**" }, method = RequestMethod.GET)
     public String index(){
         return "forward:/index.html";
     }
