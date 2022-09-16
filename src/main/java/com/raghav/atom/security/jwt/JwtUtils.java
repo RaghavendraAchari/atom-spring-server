@@ -3,6 +3,8 @@ package com.raghav.atom.security.jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -13,14 +15,18 @@ import java.util.function.Function;
 
 @Service
 public class JwtUtils {
-    private String SECRET = "kSQYzOlaeijSyVwArMYfW0suZ0LjeODgT6i0JXsbBb0e1uZHUW";
+    private String SECRET = null;
+    @Autowired
+    public JwtUtils(Environment environment) {
+        this.SECRET = environment.getProperty("jwtSecret");
+    }
 
     private String createToken(Map<String, Object> claims, String username){
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 *60*60))
+                .setExpiration(new Date(System.currentTimeMillis() + (1000 *60*60)))
                 .signWith(SignatureAlgorithm.HS256, SECRET)
                 .compact();
     }

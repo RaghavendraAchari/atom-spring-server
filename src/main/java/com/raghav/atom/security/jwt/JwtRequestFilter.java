@@ -2,6 +2,7 @@ package com.raghav.atom.security.jwt;
 
 import com.raghav.atom.security.UserDetailsImpl;
 import com.raghav.atom.security.UserDetailsServiceImpl;
+import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,7 +29,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
+                                    FilterChain filterChain) throws ServletException, IOException , JwtException {
         final String authorizationHeader = request.getHeader("Authorization");
 
         String userName = null;

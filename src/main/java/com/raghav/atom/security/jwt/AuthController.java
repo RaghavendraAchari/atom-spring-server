@@ -38,10 +38,10 @@ public class AuthController {
         return ResponseEntity.ok(new JwtResponse(token));
     }
 
-//    @RequestMapping(value = "/user/{username}",method = RequestMethod.GET)
-//    public ResponseEntity getUser(@PathVariable(value = "username") String userName){
-//        System.out.println(userName);
-//        UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
-//        return ResponseEntity.ok(userDetails);
-//    }
+    //JWTFilter will validate the token and if it passes then ok
+    //otherwise by default error will be thrown
+    @RequestMapping(value = "/validate",method = RequestMethod.POST)
+    public ResponseEntity validateUser(){
+        return ResponseEntity.ok().build();
+    }
 }
