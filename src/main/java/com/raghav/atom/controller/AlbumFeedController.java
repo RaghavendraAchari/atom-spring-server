@@ -1,11 +1,13 @@
 package com.raghav.atom.controller;
 
 import com.raghav.atom.ReqResModel.AlbumFeedRequest;
+import com.raghav.atom.ReqResModel.AlbumFeedResponseModel;
 import com.raghav.atom.exception.ResourceNotFoundException;
 import com.raghav.atom.exception.ServiceException;
 import com.raghav.atom.model.AlbumFeed;
 import com.raghav.atom.service.AlbumFeedService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +22,12 @@ public class AlbumFeedController {
     public ResponseEntity getAllAlbum() throws ServiceException {
         return ResponseEntity.ok()
                 .body(albumFeedService.getAllFeed());
+    }
+
+    @GetMapping("/page/{pageNumber}")
+    public ResponseEntity getAllAlbum(@PathVariable("pageNumber") Integer pageNumber) throws ServiceException {
+        AlbumFeedResponseModel albumFeedResponseModel = new AlbumFeedResponseModel(albumFeedService.getAllFeed(pageNumber));
+        return ResponseEntity.ok(albumFeedResponseModel);
     }
 
     @GetMapping("/{id}")

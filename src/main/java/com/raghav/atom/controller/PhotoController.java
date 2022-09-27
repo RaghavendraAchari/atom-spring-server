@@ -1,5 +1,6 @@
 package com.raghav.atom.controller;
 
+import com.raghav.atom.ReqResModel.PhotoResponseModel;
 import com.raghav.atom.exception.PhotoServiceException;
 import com.raghav.atom.exception.ResourceNotFoundException;
 import com.raghav.atom.exception.ServiceException;
@@ -20,6 +21,11 @@ public class PhotoController {
     @GetMapping
     public ResponseEntity getAllPhotos() throws ResourceNotFoundException, PhotoServiceException {
         return ResponseEntity.ok(photoService.getAllPhotos());
+    }
+    @GetMapping("/page/{pageNumber}")
+    public ResponseEntity getAllPhotos(@PathVariable("pageNumber") Integer pageNumber ) throws ResourceNotFoundException, PhotoServiceException {
+        PhotoResponseModel model = new PhotoResponseModel(photoService.getAllPhotos(pageNumber));
+        return ResponseEntity.ok(model);
     }
 
     @GetMapping("/{id}")

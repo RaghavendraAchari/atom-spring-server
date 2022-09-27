@@ -12,6 +12,10 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -37,6 +41,17 @@ public class AlbumFeedService {
         try{
             List<AlbumFeed> list = albumFeedRepo.findAll();
             return list;
+        }catch (Exception e){
+            throw new ServiceException(ResourceType.ALBUM_FEED);
+        }
+
+    }
+
+    public Page<AlbumFeed> getAllFeed(int currentPage) throws ServiceException {
+        try{
+            Pageable pageable = PageRequest.of(currentPage - 1, 10,Sort.by("date").descending());
+            Page<AlbumFeed> page = albumFeedRepo.findAll(pageable);
+            return page;
         }catch (Exception e){
             throw new ServiceException(ResourceType.ALBUM_FEED);
         }

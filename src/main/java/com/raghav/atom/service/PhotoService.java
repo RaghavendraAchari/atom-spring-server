@@ -11,6 +11,10 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,6 +38,16 @@ public class PhotoService {
             if(all == null)
                 throw new ResourceNotFoundException(ResourceType.PHOTO);
             return all;
+        }catch (Exception e){
+            throw new PhotoServiceException();
+        }
+
+    }
+    public Page<Photo> getAllPhotos(int currentPage) throws ResourceNotFoundException, PhotoServiceException{
+        try{
+            Pageable pageable = PageRequest.of(currentPage - 1, 10, Sort.by("date").descending());
+            Page<Photo> page = photoRepo.findAll(pageable);
+            return page;
         }catch (Exception e){
             throw new PhotoServiceException();
         }
