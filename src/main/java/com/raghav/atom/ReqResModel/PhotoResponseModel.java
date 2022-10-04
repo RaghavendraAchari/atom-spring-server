@@ -21,7 +21,7 @@ public class PhotoResponseModel {
 
     public PhotoResponseModel(Page<Photo> page){
         this.photos = page.getContent();
-        this.currentPage = page.getNumber();
+        this.currentPage = page.getNumber() + 1;
         this.pageSize = page.getSize();
         this.totalPages = page.getTotalPages();
     }

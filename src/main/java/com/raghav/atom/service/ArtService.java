@@ -3,6 +3,7 @@ package com.raghav.atom.service;
 import com.raghav.atom.exception.ResourceNotFoundException;
 import com.raghav.atom.exception.ServiceException;
 import com.raghav.atom.model.Art;
+import com.raghav.atom.model.Photo;
 import com.raghav.atom.model.ResourceType;
 import com.raghav.atom.repo.ArtRepo;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,10 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,6 +38,17 @@ public class ArtService {
     public List<Art> getAllArt() throws ServiceException {
         try{
             return artRepo.findAll();
+        }catch (Exception e){
+            throw new ServiceException(ResourceType.ART);
+        }
+
+    }
+
+    public Page<Art> getAllArt(int currentPage) throws ServiceException {
+        try{
+            Pageable pageable = PageRequest.of(currentPage - 1, 10, Sort.by("date").descending());
+            Page<Art> page = artRepo.findAll(pageable);
+            return page;
         }catch (Exception e){
             throw new ServiceException(ResourceType.ART);
         }

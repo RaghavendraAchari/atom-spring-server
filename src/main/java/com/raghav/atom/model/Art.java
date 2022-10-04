@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDateTime;
 
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Document("Art")
 public class Art {
     @Id
     @JsonSerialize(using= ToStringSerializer.class)

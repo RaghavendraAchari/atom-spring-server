@@ -9,5 +9,5 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Service;
 
 public interface AlbumFeedRepo extends MongoRepository<AlbumFeed, ObjectId> {
-    public Page<AlbumFeed> findAll(Pageable page);
+    Page<AlbumFeed> findAll(Pageable page);
 }

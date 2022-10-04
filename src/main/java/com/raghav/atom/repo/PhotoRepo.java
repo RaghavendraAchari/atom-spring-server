@@ -8,5 +8,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 
 public interface PhotoRepo extends MongoRepository<Photo, ObjectId> {
-    public Page<Photo> findAll(Pageable pageable);
+    Page<Photo> findAll(Pageable pageable);
 }

@@ -51,8 +51,8 @@ class PhotoControllerTest {
 
     @Test
     void addPhoto() throws Exception{
-//        Mockito.when(photoService.addNewDocument(
-//                new Photo(new ObjectId(), LocalDateTime.now(), "ThumbnailUrl", "OriginalFileUrl"))).thenReturn(list);
+        Photo photo = new Photo(new ObjectId(), LocalDateTime.now(), "ThumbnailUrl", "OriginalFileUrl");
+        Mockito.when(photoService.addNewDocument(photo)).then(invocation -> {list.add(photo); return list;});
 //        ResponseEntity response = this.photoController.getAllPhotos();
 //        Assertions.assertEquals(response.getStatusCodeValue(), 200);
 //        Assertions.assertEquals(response.getBody(), list);

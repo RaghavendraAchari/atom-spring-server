@@ -1,5 +1,6 @@
 package com.raghav.atom.controller;
 
+import com.raghav.atom.ReqResModel.ArtResponseModel;
 import com.raghav.atom.exception.ResourceNotFoundException;
 import com.raghav.atom.exception.ServiceException;
 import com.raghav.atom.model.Art;
@@ -18,6 +19,12 @@ public class ArtController {
     public ResponseEntity getAllArt() throws ServiceException {
         return ResponseEntity.ok()
                 .body(artService.getAllArt());
+    }
+
+    @GetMapping("/page/{pageNumber}")
+    public ResponseEntity getAllArt(@PathVariable("pageNumber") Integer pageNumber) throws ServiceException {
+        ArtResponseModel model = new ArtResponseModel(artService.getAllArt(pageNumber));
+        return ResponseEntity.ok(model);
     }
 
     @GetMapping("/{id}")
