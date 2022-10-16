@@ -26,44 +26,44 @@ import java.util.List;
 
 import static org.mockito.Mockito.verify;
 
-@ExtendWith(MockitoExtension.class)
+//@ExtendWith(MockitoExtension.class)
 class PhotoControllerTest {
-    @Autowired
-    private MockMvc mockMvc;
-    @Mock
-    private PhotoService photoService;
-    @InjectMocks
-    private PhotoController photoController;
-
-    List<Photo> list = List.of(new Photo(new ObjectId(), LocalDateTime.now(), "ThumbnailUrl", "OriginalFileUrl")
-            , new Photo(new ObjectId(), LocalDateTime.now(), "ThumbnailUrl", "OriginalFileUrl")
-            );
-
-    @Test
-    void getAllPhotosOnSuccess() throws Exception {
-        Mockito.when(photoService.getAllPhotos()).thenReturn(list);
-        ResponseEntity response = this.photoController.getAllPhotos();
-        Assertions.assertEquals(response.getStatusCodeValue(), 200);
-        Assertions.assertEquals(response.getBody(), list);
-        System.out.println(response.getBody());
-
-    }
-
-    @Test
-    void addPhoto() throws Exception{
-        Photo photo = new Photo(new ObjectId(), LocalDateTime.now(), "ThumbnailUrl", "OriginalFileUrl");
-        Mockito.when(photoService.addNewDocument(photo)).then(invocation -> {list.add(photo); return list;});
+//    @Autowired
+//    private MockMvc mockMvc;
+//    @Mock
+//    private PhotoService photoService;
+//    @InjectMocks
+//    private PhotoController photoController;
+//
+//    List<Photo> list = List.of(new Photo(new ObjectId(), LocalDateTime.now(), "ThumbnailUrl", "OriginalFileUrl")
+//            , new Photo(new ObjectId(), LocalDateTime.now(), "ThumbnailUrl", "OriginalFileUrl")
+//            );
+//
+//    @Test
+//    void getAllPhotosOnSuccess() throws Exception {
+//        Mockito.when(photoService.getAllPhotos()).thenReturn(list);
 //        ResponseEntity response = this.photoController.getAllPhotos();
 //        Assertions.assertEquals(response.getStatusCodeValue(), 200);
 //        Assertions.assertEquals(response.getBody(), list);
 //        System.out.println(response.getBody());
-    }
+//
+//    }
+//
+//    @Test
+//    void addPhoto() throws Exception{
+//        Photo photo = new Photo(new ObjectId(), LocalDateTime.now(), "ThumbnailUrl", "OriginalFileUrl");
+//        Mockito.when(photoService.addNewDocument(photo)).then(invocation -> {list.add(photo); return list;});
+////        ResponseEntity response = this.photoController.getAllPhotos();
+////        Assertions.assertEquals(response.getStatusCodeValue(), 200);
+////        Assertions.assertEquals(response.getBody(), list);
+////        System.out.println(response.getBody());
+//    }
 
-    @Test
-    void updatePhoto() {
-    }
-
-    @Test
-    void deletePhoto() {
-    }
+//    @Test
+//    void updatePhoto() {
+//    }
+//
+//    @Test
+//    void deletePhoto() {
+//    }
 }
