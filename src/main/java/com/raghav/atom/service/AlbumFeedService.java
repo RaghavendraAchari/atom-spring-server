@@ -58,6 +58,22 @@ public class AlbumFeedService {
 
     }
 
+    public Page<AlbumFeed> getAllFeed(int currentPage, String category) throws ServiceException {
+        try{
+            Pageable pageable = PageRequest.of(currentPage - 1, 10,Sort.by("date").descending());
+            if(category.equals("All")){
+                Page<AlbumFeed> allFeed = getAllFeed(currentPage);
+                return allFeed;
+            }
+            Optional<Page<AlbumFeed>> allByCategory = albumFeedRepo.findAllByCategory(pageable, category);
+            allByCategory.orElseThrow(()-> new ResourceNotFoundException(ResourceType.ALBUM_FEED));
+            return allByCategory.get();
+        }catch (Exception e){
+            throw new ServiceException(ResourceType.ALBUM_FEED);
+        }
+
+    }
+
     public AlbumFeed addAlbum(AlbumFeedRequest feed) throws ServiceException {
         try{
             List<Photo> addedPhotos = photoService.addNewDocuments(feed.getPhotos());

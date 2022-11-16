@@ -36,12 +36,18 @@ public class AlbumFeed {
 
     private String details;
 
-    public AlbumFeed(ObjectId id, LocalDateTime date, String title, String description, List<String> photos, String details) {
+    private List<String> category;
+
+    public AlbumFeed(ObjectId id, LocalDateTime date,
+                     String title, String description,
+                     List<String> photos, String details,
+                     List<String> category ) {
         this.id = id;
         this.date = date;
         this.title = title;
         this.description = description;
         this.photos = photos;
         this.details = details;
+        this.category = category;
     }
 }

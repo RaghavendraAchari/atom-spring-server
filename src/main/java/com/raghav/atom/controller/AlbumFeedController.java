@@ -5,11 +5,13 @@ import com.raghav.atom.ReqResModel.AlbumFeedResponseModel;
 import com.raghav.atom.exception.ResourceNotFoundException;
 import com.raghav.atom.exception.ServiceException;
 import com.raghav.atom.model.AlbumFeed;
+import com.raghav.atom.model.Photo;
 import com.raghav.atom.service.AlbumFeedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController()
 @RequestMapping("/api/albumfeed")
@@ -19,31 +21,32 @@ public class AlbumFeedController {
 
 
     @GetMapping
-    public ResponseEntity getAllAlbum() throws ServiceException {
+    @Deprecated
+    public ResponseEntity<List<AlbumFeed>> getAllAlbum() throws ServiceException {
         return ResponseEntity.ok()
                 .body(albumFeedService.getAllFeed());
     }
-
     @GetMapping("/page/{pageNumber}")
-    public ResponseEntity getAllAlbum(@PathVariable("pageNumber") Integer pageNumber) throws ServiceException {
-        AlbumFeedResponseModel albumFeedResponseModel = new AlbumFeedResponseModel(albumFeedService.getAllFeed(pageNumber));
+    public ResponseEntity getAllAlbum(@PathVariable("pageNumber") Integer pageNumber,
+                                      @RequestParam(name = "category", defaultValue = "All", required = false) String category) throws ServiceException {
+        AlbumFeedResponseModel albumFeedResponseModel = new AlbumFeedResponseModel(albumFeedService.getAllFeed(pageNumber,category));
         return ResponseEntity.ok(albumFeedResponseModel);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getAlbumById(@PathVariable("id") String id) throws ResourceNotFoundException, ServiceException {
+    public ResponseEntity<AlbumFeed> getAlbumById(@PathVariable("id") String id) throws ResourceNotFoundException, ServiceException {
         return ResponseEntity.ok()
                 .body(albumFeedService.getAlbumFeedById(id));
     }
 
     @PostMapping(headers = "Accept=application/json")
-    public ResponseEntity addAlbum(@RequestBody AlbumFeedRequest feed) throws ServiceException {
+    public ResponseEntity<AlbumFeed> addAlbum(@RequestBody AlbumFeedRequest feed) throws ServiceException {
         return ResponseEntity.ok()
                 .body(albumFeedService.addAlbum(feed));
     }
 
     @PutMapping(headers = "Accept=application/json")
-    public ResponseEntity updateAlbum(@RequestBody AlbumFeed feed) throws ResourceNotFoundException, ServiceException {
+    public ResponseEntity<AlbumFeed> updateAlbum(@RequestBody AlbumFeed feed) throws ResourceNotFoundException, ServiceException {
         return ResponseEntity.ok()
                 .body(albumFeedService.updateDocument(feed));
 
@@ -51,7 +54,7 @@ public class AlbumFeedController {
 
     @DeleteMapping( value = "/{albumId}",headers = "Accept=application/json")
     @ResponseBody
-    public ResponseEntity deletePhoto(@PathVariable("albumId") String albumId) throws ResourceNotFoundException, ServiceException {
+    public ResponseEntity<Boolean> deletePhoto(@PathVariable("albumId") String albumId) throws ResourceNotFoundException, ServiceException {
         return ResponseEntity.ok()
                 .body(albumFeedService.deleteAlbum(albumId));
     }
