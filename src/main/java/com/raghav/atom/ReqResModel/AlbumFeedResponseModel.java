@@ -16,13 +16,13 @@ public class AlbumFeedResponseModel {
     private int currentPage;
     private int totalPages;
     private int pageSize;
+    private long totalRecords;
 
     public AlbumFeedResponseModel(Page<AlbumFeed> page) {
-        System.out.println(page.getContent().toString());
         this.albums = page.getContent();
         this.currentPage = page.getNumber() + 1;
         this.totalPages = page.getTotalPages();
         this.pageSize = page.getSize();
-
+        this.totalRecords = page.getTotalElements();
     }
 }
