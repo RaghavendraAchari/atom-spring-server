@@ -32,18 +32,20 @@ public class AlbumFeedRequest {
     private List<Photo> photos;
 
     private String details;
+    private List<String> category;
 
-    public static AlbumFeed fromAlbumFeedRequest(AlbumFeedRequest request, List<Photo> newPhotos){
+    public static AlbumFeed fromAlbumFeedRequest(AlbumFeedRequest request,
+                                                 List<Photo> newPhotos){
         AlbumFeed newOj = new AlbumFeed();
         newOj.setDate(request.date);
         newOj.setDescription(request.description);
         newOj.setDetails(request.details);
         newOj.setTitle(request.title);
+        newOj.setCategory(request.category);
 
         List<String> newPhotoIds = new ArrayList<>();
         newPhotos.forEach((item) ->
             newPhotoIds.add(item.getId().toString()) );
-
 
         newOj.setPhotos(newPhotoIds);
 
